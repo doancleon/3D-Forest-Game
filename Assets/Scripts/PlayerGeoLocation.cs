@@ -7,6 +7,9 @@ public class PlayerGeoLocation : MonoBehaviour
 {
     [SerializeField] private GameObject fire;
     [SerializeField] private GameObject edgeWorld;
+    [SerializeField] private GameObject fish;
+    private Animator fish_animator;
+
     private GameObject ex_log;
     private GameObject bad_log;
     private GameObject good_log;
@@ -16,12 +19,15 @@ public class PlayerGeoLocation : MonoBehaviour
     private bool foundFire = false;
     private bool nearEdgeWorld = false;
     private bool foundEdgeWorld = false;
+    private bool nearFish = false;
+    private bool foundFish = false;
     // Update is called once per frame
     void Start()
     {
         ex_log = transform.Find("canvas_log").gameObject;
         bad_log = transform.Find("bad_log_canvas").gameObject;
         good_log = transform.Find("good_log_canvas").gameObject;
+        fish_animator = fish.GetComponent<Animator>();
     }
     void Update()
     {
@@ -49,6 +55,14 @@ public class PlayerGeoLocation : MonoBehaviour
         {
             nearEdgeWorld = false;
         }
+        if (Vector3.Distance(fish.transform.position, transform.position) < 3)
+        {
+            nearFish = true;
+        }
+        else
+        {
+            nearFish = false;
+        }
 
 
         //check if logging
@@ -67,7 +81,7 @@ public class PlayerGeoLocation : MonoBehaviour
                 fire.transform.Find("fireText").gameObject.SetActive(false);
             }
         }
-        else
+        else if (!nearFire)
         {
             fire.transform.Find("fireEffects").gameObject.SetActive(false);
             fire.transform.Find("fireText").gameObject.SetActive(false);
@@ -83,13 +97,28 @@ public class PlayerGeoLocation : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.X) && !(nearFire || nearEdgeWorld) && !(bad_log.activeInHierarchy))
+        if (nearFish)
+        {
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                fish_animator.SetBool("swimming", true);
+                if (!foundFish)
+                    pecularities.text += "\n     -Fish out of water!: There's no sign of water... but it looks like fish don't need it.";
+                foundFish = true;
+            }
+        }
+        else if (!nearFish)
+        {
+            fish_animator.SetBool("swimming", false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.X) && !(nearFire || nearEdgeWorld || nearFish) && !(bad_log.activeInHierarchy))
         {
             good_log.SetActive(false);
             bad_log.SetActive(true);
             StartCoroutine("loggingTimer");
         }
-        else if (Input.GetKeyDown(KeyCode.X) && !(good_log.activeInHierarchy) && (nearFire||nearEdgeWorld))
+        else if (Input.GetKeyDown(KeyCode.X) && !(good_log.activeInHierarchy) && (nearFire||nearEdgeWorld||nearFish))
         {
             bad_log.SetActive(false);
             good_log.SetActive(true);
