@@ -14,11 +14,17 @@ public class PlayerGeoLocation : MonoBehaviour
     [SerializeField] private GameObject apple1;
     [SerializeField] private GameObject apple2;
     [SerializeField] private GameObject apple3;
+    [SerializeField] private GameObject Wind;
+    [SerializeField] private GameObject mushroom;
+
+
     private int appleCount = 0;
 
     private Animator fish_animator;
     private Animator volcano_animator;
     private Animator tree_animator;
+    private Animator mushroom_animator;
+
 
     private GameObject ex_log;
     private GameObject bad_log;
@@ -39,6 +45,8 @@ public class PlayerGeoLocation : MonoBehaviour
     private bool foundAppleTree = false;
     private bool nearTrees = false;
     private bool foundTrees = false;
+    private bool nearMushroom = false;
+    private bool foundMushroom = false;
     // Update is called once per frame
     void Start()
     {
@@ -48,10 +56,10 @@ public class PlayerGeoLocation : MonoBehaviour
         hint_log = transform.Find("hint_log_canvas").gameObject;
         stray_log = transform.Find("stray_log_canvas").gameObject;
 
-    fish_animator = fish.GetComponent<Animator>();
-
+        fish_animator = fish.GetComponent<Animator>();
         volcano_animator = volcano.GetComponent<Animator>();
         tree_animator = appleTree.GetComponent<Animator>();
+        mushroom_animator = mushroom.GetComponent<Animator>();
     }
     void Update()
     {
@@ -116,6 +124,14 @@ public class PlayerGeoLocation : MonoBehaviour
         {
             nearAppleTree = false;
         }
+        if (Vector3.Distance(mushroom.transform.position, transform.position) < 4)
+        {
+            nearMushroom = true;
+        }
+        else
+        {
+            nearMushroom = false;
+        }
 
 
         //check if logging
@@ -145,8 +161,12 @@ public class PlayerGeoLocation : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.X))
             {
                 if (!foundEdgeWorld)
-                    pecularities.text += "\n     -Flatworlders: The Edge of the World?";
-                foundEdgeWorld = true;
+                {
+                    Wind.gameObject.SetActive(true);
+
+                    pecularities.text += "\n     -Flatworlders: The Edge of the World? There also seems to be wind blowing now...";
+                    foundEdgeWorld = true;
+                }
             }
         }
 
@@ -233,7 +253,22 @@ public class PlayerGeoLocation : MonoBehaviour
             volcano_animator.SetBool("erupting", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.X) && !(nearFire || nearEdgeWorld || nearFish || nearVolcano||nearTrees||nearAppleTree) && !(bad_log.activeInHierarchy))
+        if (nearMushroom)
+        {
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                mushroom_animator.SetBool("jumping", true);
+                if (!foundMushroom)
+                    pecularities.text += "\n     -A giant mushroom.";
+                foundMushroom = true;
+            }
+        }
+        else if (!nearMushroom)
+        {
+            mushroom_animator.SetBool("jumping", false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.X) && !(nearFire || nearEdgeWorld || nearFish || nearVolcano||nearTrees||nearAppleTree || nearMushroom) && !(bad_log.activeInHierarchy))
         {
             stray_log.SetActive(false);
             hint_log.SetActive(false);
@@ -241,7 +276,7 @@ public class PlayerGeoLocation : MonoBehaviour
             bad_log.SetActive(true);
             StartCoroutine("loggingTimer");
         }
-        else if (Input.GetKeyDown(KeyCode.X) && !(good_log.activeInHierarchy) && (nearFire || nearEdgeWorld || nearFish || nearVolcano ||nearTrees||nearAppleTree))
+        else if (Input.GetKeyDown(KeyCode.X) && !(good_log.activeInHierarchy) && (nearFire || nearEdgeWorld || nearFish || nearVolcano ||nearTrees||nearAppleTree ||nearMushroom))
         {
             stray_log.SetActive(false);
             hint_log.SetActive(false);
