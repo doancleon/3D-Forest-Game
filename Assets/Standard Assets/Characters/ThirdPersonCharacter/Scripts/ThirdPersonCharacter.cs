@@ -44,6 +44,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		public void Move(Vector3 move, bool crouch, bool jump)
 		{
+			crouch = false;
 
 			// convert the world relative moveInput vector into a local-relative
 			// turn amount and forward amount required to head in the desired
@@ -77,6 +78,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		void ScaleCapsuleForCrouching(bool crouch)
 		{
+			/*
 			if (m_IsGrounded && crouch)
 			{
 				if (m_Crouching) return;
@@ -97,11 +99,13 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				m_Capsule.center = m_CapsuleCenter;
 				m_Crouching = false;
 			}
+			*/
 		}
 
 		void PreventStandingInLowHeadroom()
 		{
 			// prevent standing up in crouch-only zones
+			/*
 			if (!m_Crouching)
 			{
 				Ray crouchRay = new Ray(m_Rigidbody.position + Vector3.up * m_Capsule.radius * k_Half, Vector3.up);
@@ -111,6 +115,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 					m_Crouching = true;
 				}
 			}
+			*/
 		}
 
 
