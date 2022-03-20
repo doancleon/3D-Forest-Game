@@ -8,11 +8,14 @@ public class PlayerGeoLocation : MonoBehaviour
     [SerializeField] private GameObject fire;
     [SerializeField] private GameObject edgeWorld;
     [SerializeField] private GameObject fish;
+    [SerializeField] private GameObject volcano;
     private Animator fish_animator;
+    private Animator volcano_animator;
 
     private GameObject ex_log;
     private GameObject bad_log;
     private GameObject good_log;
+    private GameObject hint_log;
     [SerializeField] private Text pecularities;
 
     private bool nearFire = false;
@@ -21,13 +24,17 @@ public class PlayerGeoLocation : MonoBehaviour
     private bool foundEdgeWorld = false;
     private bool nearFish = false;
     private bool foundFish = false;
+    private bool nearVolcano = false;
+    private bool foundVolcano = false;
     // Update is called once per frame
     void Start()
     {
         ex_log = transform.Find("canvas_log").gameObject;
         bad_log = transform.Find("bad_log_canvas").gameObject;
         good_log = transform.Find("good_log_canvas").gameObject;
+        hint_log = transform.Find("hint_log_canvas").gameObject;
         fish_animator = fish.GetComponent<Animator>();
+        volcano_animator = volcano.GetComponent<Animator>();
     }
     void Update()
     {
@@ -62,6 +69,19 @@ public class PlayerGeoLocation : MonoBehaviour
         else
         {
             nearFish = false;
+        }
+        if (Vector3.Distance(volcano.transform.position, transform.position) < 7 && !(bad_log.activeInHierarchy) && !(good_log.activeInHierarchy) && !(hint_log.activeInHierarchy) && !(foundVolcano))
+        {
+            hint_log.SetActive(true);
+            StartCoroutine("loggingTimer");
+        }
+        if (Vector3.Distance(volcano.transform.position, transform.position) < 3)
+        {
+            nearVolcano = true;
+        }
+        else
+        {
+            nearVolcano = false;
         }
 
 
@@ -112,14 +132,33 @@ public class PlayerGeoLocation : MonoBehaviour
             fish_animator.SetBool("swimming", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.X) && !(nearFire || nearEdgeWorld || nearFish) && !(bad_log.activeInHierarchy))
+        if (nearVolcano)
         {
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                volcano.transform.Find("fireEffects").gameObject.SetActive(true);
+                volcano_animator.SetBool("erupting", true);
+                if (!foundVolcano)
+                    pecularities.text += "\n     -Mini-Volcanos erupting!";
+                foundVolcano = true;
+            }
+        }
+        else if (!nearVolcano)
+        {
+            volcano.transform.Find("fireEffects").gameObject.SetActive(false);
+            volcano_animator.SetBool("erupting", false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.X) && !(nearFire || nearEdgeWorld || nearFish||nearVolcano) && !(bad_log.activeInHierarchy))
+        {
+            hint_log.SetActive(false);
             good_log.SetActive(false);
             bad_log.SetActive(true);
             StartCoroutine("loggingTimer");
         }
-        else if (Input.GetKeyDown(KeyCode.X) && !(good_log.activeInHierarchy) && (nearFire||nearEdgeWorld||nearFish))
+        else if (Input.GetKeyDown(KeyCode.X) && !(good_log.activeInHierarchy) && (nearFire||nearEdgeWorld||nearFish||nearVolcano))
         {
+            hint_log.SetActive(false);
             bad_log.SetActive(false);
             good_log.SetActive(true);
             StartCoroutine("loggingTimer");
@@ -130,5 +169,6 @@ public class PlayerGeoLocation : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         bad_log.SetActive(false);
         good_log.SetActive(false);
+        hint_log.SetActive(false);
     }
 }
