@@ -11306,6 +11306,93 @@ MonoBehaviour:
     m_MaintainAim: 1
   m_SourceObjectsGUIToggle: 1
   m_SettingsGUIToggle: 0
+--- !u!1001 &1073995434
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: c05a89b5316bf1a4ea43f7522aa4ef3b, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c05a89b5316bf1a4ea43f7522aa4ef3b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c05a89b5316bf1a4ea43f7522aa4ef3b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c05a89b5316bf1a4ea43f7522aa4ef3b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c05a89b5316bf1a4ea43f7522aa4ef3b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.952
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c05a89b5316bf1a4ea43f7522aa4ef3b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.086
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c05a89b5316bf1a4ea43f7522aa4ef3b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -11.018
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c05a89b5316bf1a4ea43f7522aa4ef3b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8967561
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c05a89b5316bf1a4ea43f7522aa4ef3b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.06365338
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c05a89b5316bf1a4ea43f7522aa4ef3b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.42147264
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c05a89b5316bf1a4ea43f7522aa4ef3b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.118901536
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c05a89b5316bf1a4ea43f7522aa4ef3b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 12.38
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c05a89b5316bf1a4ea43f7522aa4ef3b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -49.325
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c05a89b5316bf1a4ea43f7522aa4ef3b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 9.404
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c05a89b5316bf1a4ea43f7522aa4ef3b, type: 3}
+      propertyPath: m_Name
+      value: 'doan_cleon_volcano '
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c05a89b5316bf1a4ea43f7522aa4ef3b, type: 3}
+--- !u!1 &1073995435 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c05a89b5316bf1a4ea43f7522aa4ef3b, type: 3}
+  m_PrefabInstance: {fileID: 1073995434}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1073995437
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073995435}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8426976, y: 0.4176557, z: 0.6367209}
+  m_Center: {x: -0.07864695, y: 0.3308642, z: -0.026788412}
 --- !u!1 &1078440296
 GameObject:
   m_ObjectHideFlags: 0
