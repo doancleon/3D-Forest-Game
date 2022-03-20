@@ -19,7 +19,7 @@ Below are short-descriptions of the 3D models:
 IMPORTANT  
 ########################################################  
 All 3D models can be found in the final_models folder.  
-The folder game_builds can be used to launch the game.  
+The folder game_builds can be used to launch the game. Simply click on the unity application titled 3D Forest Game. 
 ########################################################
 
 CONTROLS  
