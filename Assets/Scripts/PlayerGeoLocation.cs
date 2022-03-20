@@ -9,6 +9,8 @@ public class PlayerGeoLocation : MonoBehaviour
     [SerializeField] private GameObject edgeWorld;
     [SerializeField] private GameObject fish;
     [SerializeField] private GameObject volcano;
+    [SerializeField] private GameObject appleTree;
+    [SerializeField] private GameObject trees;
     private Animator fish_animator;
     private Animator volcano_animator;
 
@@ -16,6 +18,7 @@ public class PlayerGeoLocation : MonoBehaviour
     private GameObject bad_log;
     private GameObject good_log;
     private GameObject hint_log;
+    private GameObject stray_log;
     [SerializeField] private Text pecularities;
 
     private bool nearFire = false;
@@ -26,6 +29,10 @@ public class PlayerGeoLocation : MonoBehaviour
     private bool foundFish = false;
     private bool nearVolcano = false;
     private bool foundVolcano = false;
+    private bool nearAppleTree = false;
+    private bool foundAppleTree = false;
+    private bool nearTrees = false;
+    private bool foundTrees = false;
     // Update is called once per frame
     void Start()
     {
@@ -33,7 +40,9 @@ public class PlayerGeoLocation : MonoBehaviour
         bad_log = transform.Find("bad_log_canvas").gameObject;
         good_log = transform.Find("good_log_canvas").gameObject;
         hint_log = transform.Find("hint_log_canvas").gameObject;
-        fish_animator = fish.GetComponent<Animator>();
+        stray_log = transform.Find("stray_log_canvas").gameObject;
+
+    fish_animator = fish.GetComponent<Animator>();
         volcano_animator = volcano.GetComponent<Animator>();
     }
     void Update()
@@ -70,7 +79,7 @@ public class PlayerGeoLocation : MonoBehaviour
         {
             nearFish = false;
         }
-        if (Vector3.Distance(volcano.transform.position, transform.position) < 7 && !(bad_log.activeInHierarchy) && !(good_log.activeInHierarchy) && !(hint_log.activeInHierarchy) && !(foundVolcano))
+        if (Vector3.Distance(volcano.transform.position, transform.position) < 6 && !(bad_log.activeInHierarchy) && !(good_log.activeInHierarchy) && !(hint_log.activeInHierarchy) && !(foundVolcano) &&!(stray_log.activeInHierarchy))
         {
             hint_log.SetActive(true);
             StartCoroutine("loggingTimer");
@@ -83,6 +92,22 @@ public class PlayerGeoLocation : MonoBehaviour
         {
             nearVolcano = false;
         }
+        if (Vector3.Distance(trees.transform.position, transform.position) < 2)
+        {
+            nearTrees = true;
+        }
+        else
+        {
+            nearTrees = false;
+        }
+        if (Vector3.Distance(appleTree.transform.position, transform.position) < 2)
+        {
+            nearAppleTree = true;
+        }
+        else
+        {
+            nearAppleTree = false;
+        }
 
 
         //check if logging
@@ -93,11 +118,11 @@ public class PlayerGeoLocation : MonoBehaviour
                 fire.transform.Find("fireEffects").gameObject.SetActive(true);
                 if (!foundFire)
                     pecularities.text += "\n     -There's fire on this planet!";
-                            foundFire = true;
+                foundFire = true;
             }
             fire.transform.Find("fireText").gameObject.SetActive(true);
             if (fire.transform.Find("fireEffects").gameObject.activeSelf)
-            { 
+            {
                 fire.transform.Find("fireText").gameObject.SetActive(false);
             }
         }
@@ -114,6 +139,25 @@ public class PlayerGeoLocation : MonoBehaviour
                 if (!foundEdgeWorld)
                     pecularities.text += "\n     -Flatworlders: The Edge of the World?";
                 foundEdgeWorld = true;
+            }
+        }
+
+        if (nearTrees)
+        {
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                if (!foundTrees)
+                    pecularities.text += "\n     -Tree-huggers: There are trees on this planet!";
+                foundTrees = true;
+            }
+        }
+        if (nearAppleTree)
+        {
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                if (!foundAppleTree)
+                    pecularities.text += "\n     -The Big Apple: There are huge apple trees that grow gigantic and delicious apples!";
+                foundAppleTree = true;
             }
         }
 
@@ -149,15 +193,17 @@ public class PlayerGeoLocation : MonoBehaviour
             volcano_animator.SetBool("erupting", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.X) && !(nearFire || nearEdgeWorld || nearFish||nearVolcano) && !(bad_log.activeInHierarchy))
+        if (Input.GetKeyDown(KeyCode.X) && !(nearFire || nearEdgeWorld || nearFish || nearVolcano||nearTrees||nearAppleTree) && !(bad_log.activeInHierarchy))
         {
+            stray_log.SetActive(false);
             hint_log.SetActive(false);
             good_log.SetActive(false);
             bad_log.SetActive(true);
             StartCoroutine("loggingTimer");
         }
-        else if (Input.GetKeyDown(KeyCode.X) && !(good_log.activeInHierarchy) && (nearFire||nearEdgeWorld||nearFish||nearVolcano))
+        else if (Input.GetKeyDown(KeyCode.X) && !(good_log.activeInHierarchy) && (nearFire || nearEdgeWorld || nearFish || nearVolcano ||nearTrees||nearAppleTree))
         {
+            stray_log.SetActive(false);
             hint_log.SetActive(false);
             bad_log.SetActive(false);
             good_log.SetActive(true);
@@ -170,5 +216,19 @@ public class PlayerGeoLocation : MonoBehaviour
         bad_log.SetActive(false);
         good_log.SetActive(false);
         hint_log.SetActive(false);
+        stray_log.SetActive(false);
+    }
+
+
+    void OnCollisionEnter(Collision collide)
+    {
+        if (collide.gameObject.tag == "stray")
+        {
+            bad_log.SetActive(false);
+            good_log.SetActive(false);
+            hint_log.SetActive(false);
+            stray_log.SetActive(true);
+            StartCoroutine("loggingTimer");
+        }
     }
 }
