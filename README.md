@@ -9,6 +9,7 @@ Below are short-descriptions of the 3D models:
 
 -Tree: A low poly model made with Blender  
 -AppleTree: A low poly model with rigging made with Blender. Animated with Unity. 
+-Mushroom: A low poly model with rigging made with Blender. Animated with Unity.
 -Fish: A low poly model with rigging made with Maya. 3D painted with Maya. Animated with Unity.  
 -Volcano: A low poly model with rigging made with Maya. Animated with Unity.  
 -Fireplace: An animation of particles made with Maya. The jpeg was used to complete the particle system in Unity.  
