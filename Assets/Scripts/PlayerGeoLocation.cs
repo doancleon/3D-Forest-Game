@@ -11,8 +11,14 @@ public class PlayerGeoLocation : MonoBehaviour
     [SerializeField] private GameObject volcano;
     [SerializeField] private GameObject appleTree;
     [SerializeField] private GameObject trees;
+    [SerializeField] private GameObject apple1;
+    [SerializeField] private GameObject apple2;
+    [SerializeField] private GameObject apple3;
+    private int appleCount = 0;
+
     private Animator fish_animator;
     private Animator volcano_animator;
+    private Animator tree_animator;
 
     private GameObject ex_log;
     private GameObject bad_log;
@@ -43,7 +49,9 @@ public class PlayerGeoLocation : MonoBehaviour
         stray_log = transform.Find("stray_log_canvas").gameObject;
 
     fish_animator = fish.GetComponent<Animator>();
+
         volcano_animator = volcano.GetComponent<Animator>();
+        tree_animator = appleTree.GetComponent<Animator>();
     }
     void Update()
     {
@@ -155,9 +163,41 @@ public class PlayerGeoLocation : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.X))
             {
+                tree_animator.SetBool("wiggle", true);
+                StartCoroutine("waitTree");
                 if (!foundAppleTree)
                     pecularities.text += "\n     -The Big Apple: There are huge apple trees that grow gigantic and delicious apples!";
                 foundAppleTree = true;
+                if (appleCount == 0) {
+                    tree_animator.SetBool("wiggle", true);
+                    apple1.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                    apple1.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
+                    apple1.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX;
+                    apple1.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX;
+                    apple1.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationY;
+                    apple1.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationZ;
+                }
+                else if (appleCount == 1)
+                {
+                    apple2.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                    apple2.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
+                    apple2.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX;
+                    apple2.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX;
+                    apple2.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationY;
+                    apple2.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationZ;
+                }
+                if (appleCount == 2)
+                {
+                    apple3.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                    apple3.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ;
+                    apple3.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX;
+                    apple3.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX;
+                    apple3.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationY;
+                    apple3.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationZ;
+                }
+
+                appleCount += 1;
+
             }
         }
 
@@ -218,6 +258,14 @@ public class PlayerGeoLocation : MonoBehaviour
         hint_log.SetActive(false);
         stray_log.SetActive(false);
     }
+    private IEnumerator waitTree()
+    {
+        yield return new WaitForSeconds(2.0f);
+        tree_animator.SetBool("wiggle", false);
+
+
+    }
+
 
 
     void OnCollisionEnter(Collision collide)
