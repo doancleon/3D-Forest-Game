@@ -21,5 +21,5 @@ The folder game_builds holds the current version of the game. The unity applicat
 # CONTROLS  
   
 Use WASD or ArrowKeys to move and Spacebar to jump.  
-Press X to log nearby events and M to open and close the explorer's log.
+Press X to log nearby events and M to open and close the explorer's log.  
 ESC key can be used to exit the game.
