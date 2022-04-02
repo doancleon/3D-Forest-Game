@@ -16,8 +16,9 @@ Below are short-descriptions of the 3D models:
 # IMPORTANT
   
 All 3D models can be found in the final_models folder.  
-Within the final_models folder, there is a folder titled unused_models which are 3D models we created, but are not used in the game.
-The folder game_builds holds the current version of the game. The unity application titled 3D Forest Game.exe can be used to launch the game.  
+Within the final_models folder, there is a folder titled unused_models which are 3D models we created, but are not used in the game.  
+The folder game_builds holds the current version of the game.  
+The unity application titled 3D Forest Game.exe can be used to launch the game.  
 
 # CONTROLS  
   
